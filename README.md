@@ -1,4 +1,4 @@
-# Turo Car Analyser
+# Turo Car Rental Analyser
 
 A Windows desktop decision-support application that turns car-rental research CSVs into vehicle rankings, comparable listings, revenue trends, and acquisition scenarios.
 
