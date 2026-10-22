@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - name: Audit dependencies (including transitive packages)
+        run: dotnet restore TuroCarAnalyser/TuroCarAnalyser.csproj --force -p:NuGetAudit=true -p:NuGetAuditMode=all -warnaserror
       - name: Build desktop app
         run: dotnet build TuroCarAnalyser/TuroCarAnalyser.csproj --configuration Release
       - name: Run smoke checks

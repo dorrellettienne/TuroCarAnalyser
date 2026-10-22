@@ -862,7 +862,8 @@ public sealed class MainViewModel : ObservableObject
         SelectedListingFeatureText = BuildSelectedListingFeatureText(SelectedListing);
         SelectedListingExternalUrl = SelectedListing.ListingUrl;
         SelectedListingImageUrl = SelectedListing.ImageUrl;
-        SelectedListingImageSource = LoadImage(SelectedListing.ImageUrl);
+        // CSV URLs are untrusted. Images open only after explicit confirmation in the browser.
+        SelectedListingImageSource = null;
         OnPropertyChanged(nameof(CanOpenSelectedListingUrl));
         OnPropertyChanged(nameof(CanOpenSelectedImageUrl));
 
@@ -1128,29 +1129,6 @@ public sealed class MainViewModel : ObservableObject
         return parts.Count == 0
             ? "Feature and delivery setup details were not included in this export."
             : string.Join(" | ", parts);
-    }
-
-    private static BitmapImage? LoadImage(string? imageUrl)
-    {
-        if (string.IsNullOrWhiteSpace(imageUrl) || !Uri.TryCreate(imageUrl, UriKind.Absolute, out var uri))
-        {
-            return null;
-        }
-
-        try
-        {
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = uri;
-            image.CacheOption = BitmapCacheOption.OnLoad;
-            image.EndInit();
-            image.Freeze();
-            return image;
-        }
-        catch
-        {
-            return null;
-        }
     }
 
     private static double CalculateTrendPercent(IReadOnlyList<decimal> monthlyValues)

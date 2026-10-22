@@ -8,6 +8,14 @@ static void Check(bool condition, string message)
 }
 
 var importer = new CsvImportService();
+Check(ExternalLinkPolicy.TryGetWebUri("https://example.com/listing", out var webUri)
+    && webUri!.Host == "example.com", "HTTPS listing links are accepted");
+foreach (var unsafeLink in new string?[] { null, "", "not a URL", @"C:\private\run.exe",
+    @"\\server\share\image.png", "file:///C:/private/image.png", "javascript:alert(1)",
+    "ms-settings:privacy", "https://user:password@example.com/" })
+{
+    Check(!ExternalLinkPolicy.TryGetWebUri(unsafeLink, out _), "Unsafe or malformed external link is rejected");
+}
 var demo = importer.LoadFiles(Directory.GetFiles(Path.Combine(AppContext.BaseDirectory, "SampleData"), "*.csv"));
 Check(demo.Listings.Count == 16, "Both demo formats import all 16 rows");
 Check(demo.Warnings.Count == 0, "Demo imports have no warnings");

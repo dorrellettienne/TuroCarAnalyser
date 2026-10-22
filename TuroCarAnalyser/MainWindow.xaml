@@ -733,8 +733,9 @@
                                                             CornerRadius="16"
                                                             ClipToBounds="True"
                                                             Background="#EEF4F5">
-                                                        <Image Source="{Binding SelectedListingImageSource}"
-                                                               Stretch="UniformToFill" />
+                                                        <TextBlock Text="Image hidden for privacy. Use Open image to view."
+                                                                   TextWrapping="Wrap" Margin="12"
+                                                                   VerticalAlignment="Center" />
                                                     </Border>
 
                                                     <StackPanel Margin="0,10,0,0"

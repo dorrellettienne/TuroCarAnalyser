@@ -298,11 +298,24 @@ public partial class MainWindow : Window
             return;
         }
 
+        if (!ExternalLinkPolicy.TryGetWebUri(url, out var uri))
+        {
+            MessageBox.Show(this, "Only HTTP or HTTPS links without embedded credentials can be opened.",
+                "Unsafe Link Blocked", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        if (MessageBox.Show(this, $"Open this external {label} in your browser?\n\n{uri!.AbsoluteUri}\n\nThe website may receive your IP address and browser cookies.",
+            "Open External Website", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
         try
         {
             Process.Start(new ProcessStartInfo
             {
-                FileName = url,
+                FileName = uri.AbsoluteUri,
                 UseShellExecute = true,
             });
         }

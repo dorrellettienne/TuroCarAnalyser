@@ -74,10 +74,12 @@ Run `TuroCarAnalyser.exe` from that folder and retain its supporting files.
 
 ## Data and limitations
 
-Records are stored in `%LOCALAPPDATA%\TuroCarAnalyser\knowledge-base.db` (or the redirected location when using the launcher). Clearing the visible session does not delete that database. Listing images may load from external URLs.
+Records are stored in `%LOCALAPPDATA%\TuroCarAnalyser\knowledge-base.db` (or the redirected location when using the launcher). Clearing the visible session does not delete that database. Images are not fetched automatically. External HTTP/HTTPS links open only after confirmation; the destination website may receive your IP address and browser cookies.
 
 Scores use hand-set weights and depend on the imported sample. Exported revenues are estimates, missing months are not evidence of zero revenue, and the variability indicator is not a validated seasonal forecast. Confirm whether source revenue already includes protection-plan deductions before applying ROI fees. Mixed currencies are not converted.
 
 Known-format recognition currently requires all critical headers; a modified export can fall back to manual mapping. Stronger schema-drift validation, missing-data handling, and fee-basis tracking remain priorities. See [the roadmap](docs/ARCHITECTURE.md#next-engineering-steps).
 
 Private exports, local databases, build outputs, and scratch screenshots are excluded from Git. No real host dataset is required for the demo.
+
+See [security and publication checks](SECURITY.md) before sharing this project.
