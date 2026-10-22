@@ -1,0 +1,22 @@
+name: Windows build and smoke checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Build desktop app
+        run: dotnet build TuroCarAnalyser/TuroCarAnalyser.csproj --configuration Release
+      - name: Run smoke checks
+        run: dotnet run --project tests/TuroCarAnalyser.SmokeTests/TuroCarAnalyser.SmokeTests.csproj --configuration Release
